@@ -81,16 +81,17 @@
                         "value": "@item().url",
                         "type": "Expression"
                       },
-                      "folderPath": "Shared Documents"
+                      "folderPath": "shared documents"
                     }
                   },
                   "schema": [],
                   "externalReferences": {
-                    "connection": "@pipeline().libraryVariables.env_vars_sharepoint_comm.connectionId"
+                    "connection": "@pipeline().libraryVariables.env_vars_sharepoint_comm['connectionId']"
                   }
                 },
                 "storeSettings": {
                   "type": "SharePointOnlineFileStoreReadSettings",
+                  "recursive": true,
                   "enablePartitionDiscovery": false
                 }
               }
@@ -131,6 +132,49 @@
                     }
                   }
                 ]
+              }
+            },
+            {
+              "name": "Get Metadata2",
+              "type": "GetMetadata",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "fieldList": [
+                  "lastModified"
+                ],
+                "datasetSettings": {
+                  "annotations": [],
+                  "type": "Excel",
+                  "typeProperties": {
+                    "sheetName": {
+                      "value": "@item()",
+                      "type": "Expression"
+                    },
+                    "location": {
+                      "type": "SharePointOnlineFileStoreLocation",
+                      "fileName": {
+                        "value": "@item()",
+                        "type": "Expression"
+                      },
+                      "folderPath": "shared documents"
+                    }
+                  },
+                  "schema": [],
+                  "externalReferences": {
+                    "connection": "@pipeline().libraryVariables.env_vars_sharepoint_comm['connectionid']"
+                  }
+                },
+                "storeSettings": {
+                  "type": "SharePointOnlineFileStoreReadSettings",
+                  "enablePartitionDiscovery": false
+                }
               }
             }
           ]
