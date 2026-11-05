@@ -76,7 +76,7 @@
                       "type": "Expression"
                     },
                     "location": {
-                      "type": "DatasetLocation",
+                      "type": "SharePointOnlineFileStoreLocation",
                       "fileName": {
                         "value": "@item().url",
                         "type": "Expression"
@@ -90,7 +90,7 @@
                   }
                 },
                 "storeSettings": {
-                  "type": "StoreReadSettings",
+                  "type": "SharePointOnlineFileStoreReadSettings",
                   "recursive": true,
                   "enablePartitionDiscovery": false
                 }
