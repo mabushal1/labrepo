@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/schedules/1.0.0/schema.json",
+  "schedules": [
+    {
+      "enabledVariableReference": "$(/**/env_vars/toggle)",
+      "enabledControlType": "VariableReferenceManaged",
+      "jobType": "Execute",
+      "configuration": {
+        "type": "Cron",
+        "startDateTime": "2026-11-04T08:38:00",
+        "endDateTime": "2026-11-05T08:38:00",
+        "localTimeZoneId": "E. Africa Standard Time",
+        "interval": 15
+      }
+    }
+  ]
+}

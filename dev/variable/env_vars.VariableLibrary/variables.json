@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "toggle",
+      "note": "",
+      "type": "Boolean",
+      "value": true
+    },
+    {
+      "name": "sharepoint_comm",
+      "note": "",
+      "type": "ConnectionReference",
+      "value": {
+        "connectionId": "1a9994b4-e5cf-4ed7-b6f4-2b74b6783f9a"
+      }
+    },
+    {
+      "name": "lh_ref",
+      "note": "",
+      "type": "ConnectionReference",
+      "value": {
+        "connectionId": "ef76f6f5-9a7b-4f32-86e6-4312742c5cfe"
+      }
+    }
+  ]
+}
