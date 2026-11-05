@@ -1,0 +1,153 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Get Metadata1",
+        "type": "GetMetadata",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "fieldList": [
+            "exists"
+          ],
+          "datasetSettings": {
+            "annotations": [],
+            "connectionSettings": {
+              "name": "5f585b91_31cb_4414_b8ff_1addffdc86f2",
+              "properties": {
+                "annotations": [],
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "workspaceId": "ff520453-b309-473e-9775-22d534316152",
+                  "artifactId": "test",
+                  "rootFolder": "Tables"
+                },
+                "externalReferences": {
+                  "connection": "@pipeline().libraryVariables.env_vars_lh_ref['connectionid']"
+                }
+              }
+            },
+            "type": "LakehouseTable",
+            "schema": [],
+            "typeProperties": {
+              "schema": "dbo",
+              "table": "test"
+            }
+          }
+        }
+      },
+      {
+        "name": "ForEach1",
+        "type": "ForEach",
+        "dependsOn": [],
+        "typeProperties": {
+          "items": {
+            "value": "[1,2]",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "name": "Get Metadata1_copy1",
+              "type": "GetMetadata",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "fieldList": [
+                  "lastModified"
+                ],
+                "datasetSettings": {
+                  "annotations": [],
+                  "type": "Excel",
+                  "typeProperties": {
+                    "sheetName": {
+                      "value": "@item().name",
+                      "type": "Expression"
+                    },
+                    "location": {
+                      "type": "SharePointOnlineFileStoreLocation",
+                      "fileName": {
+                        "value": "@item().url",
+                        "type": "Expression"
+                      },
+                      "folderPath": "Shared Documents"
+                    }
+                  },
+                  "schema": [],
+                  "externalReferences": {
+                    "connection": "@pipeline().libraryVariables.env_vars_sharepoint_comm.connectionId"
+                  }
+                },
+                "storeSettings": {
+                  "type": "SharePointOnlineFileStoreReadSettings",
+                  "enablePartitionDiscovery": false
+                }
+              }
+            },
+            {
+              "name": "If Condition1",
+              "type": "IfCondition",
+              "dependsOn": [
+                {
+                  "activity": "Get Metadata1_copy1",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ],
+              "typeProperties": {
+                "expression": {
+                  "value": "true",
+                  "type": "Expression"
+                },
+                "ifFalseActivities": [
+                  {
+                    "name": "Wait2",
+                    "type": "Wait",
+                    "dependsOn": [],
+                    "typeProperties": {
+                      "waitTimeInSeconds": 1
+                    }
+                  }
+                ],
+                "ifTrueActivities": [
+                  {
+                    "name": "Wait1",
+                    "type": "Wait",
+                    "dependsOn": [],
+                    "typeProperties": {
+                      "waitTimeInSeconds": 1
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "libraryVariables": {
+      "env_vars_sharepoint_comm": {
+        "type": "Object",
+        "variableName": "sharepoint_comm",
+        "libraryName": "env_vars"
+      },
+      "env_vars_lh_ref": {
+        "type": "Object",
+        "variableName": "lh_ref",
+        "libraryName": "env_vars"
+      }
+    }
+  }
+}
